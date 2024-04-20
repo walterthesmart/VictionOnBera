@@ -64,3 +64,22 @@ $ forge --help
 $ anvil --help
 $ cast --help
 ```
+
+
+
+### Taiko
+```
+forge verify-contract 0x526317252e346978869d178081dA2cd10ac8b56D src Counter.sol:Counter --verifier-url https://blockscoutapi.katla.taiko.xyz/api\? --verifier blockscout
+```
+
+### Berachain
+
+```
+forge script script/BingBongToken.s.sol --rpc-url https://artio.rpc.berachain.com/ --broadcast;
+```
+
+
+# FROM ./create-erc20-contract-using-foundry
+```
+forge verify-contract 0xYOUR_DEPLOYED_CONTRACT_ADDRESS BingBongToken --etherscan-api-key=xxxx --watch --constructor-args $(cast abi-encode "constructor(string,string,uint256)" "BingBongToken" "BBT" 5678) --retries=2 --verifier-url=https://api.routescan.io/v2/network/testnet/evm/80085/etherscan/api/
+```
