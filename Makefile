@@ -39,13 +39,17 @@ ifeq ($(findstring --network sepolia,$(ARGS)),--network sepolia)
 	NETWORK_ARGS := --rpc-url $(SEPOLIA_RPC_URL) --private-key $(PRIVATE_KEY) --broadcast --verify --etherscan-api-key $(ETHERSCAN_API_KEY) -vvvv
 else ifeq ($(findstring --network berachain,$(ARGS)),--network berachain)
 	NETWORK_ARGS := --rpc-url $(BERACHAIN_RPC_URL) --private-key $(PRIVATE_KEY) --broadcast -vvvv
+else ifeq ($(findstring --network taiko,$(ARGS)),--network taiko)
+	NETWORK_ARGS := --rpc-url $(TAIKO_RPC_URL) --private-key $(PRIVATE_KEY) --broadcast -vvvv
 endif
 
 
 deploy:
-	@forge script script/VicOnBera.s.sol:VICBERAScript $(NETWORK_ARGS)
+	@forge script script/Taik.s.sol:TAIKScript $(NETWORK_ARGS)
 
 # cast abi-encode "constructor(uint256)" 1000000000000000000000000 -> 0x00000000000000000000000000000000000000000000d3c21bcecceda1000000
 # Update with your contract address, constructor arguments and anything else
 verify:
 	@forge verify-contract 0x1732621D05DF25Dd869213F2EE540C0887D3d18D VICBERA --etherscan-api-key=EWC3MARCNT2NRNU7AIQF3J25XSU4DAM9HD --watch --retries=2 --verifier-url=https://api.routescan.io/v2/network/testnet/evm/80085/etherscan/api/
+mint:
+	@forge script script/Interactions.s.sol:MintVBERA $(NETWORK_ARGS)
